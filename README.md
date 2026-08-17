@@ -33,4 +33,4 @@ Since QR CryptoVault is a single self-contained HTML file, running it requires n
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/2diworx/client-side-crypto-qr/blob/main/LICENSE) for more information.
