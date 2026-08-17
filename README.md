@@ -2,6 +2,8 @@
 
 > A lightweight, client-side AES-256-GCM encrypted QR code generator and decryptor.
 
+**Live Web App:** [https://2diworx.github.io/client-side-crypto-qr/](https://2diworx.github.io/client-side-crypto-qr/)
+
 QR CryptoVault lets you store and retrieve sensitive payloads (seed phrases, private keys, backup codes) inside QR codes. All encryption and decryption happen strictly in your browser using standard Web Crypto APIs (`AES-GCM` and `PBKDF2`). No data ever leaves your device or touches a server.
 
 ## Features
@@ -14,11 +16,17 @@ QR CryptoVault lets you store and retrieve sensitive payloads (seed phrases, pri
 
 ## Getting Started
 
-Since QR CryptoVault is a single self-contained HTML file, running it requires no installation or setup:
+You can use QR CryptoVault directly in your browser or run it locally for maximum air-gapped security:
+
+### Option 1: Web Browser
+Access the live deployment directly at [https://2diworx.github.io/client-side-crypto-qr/](https://2diworx.github.io/client-side-crypto-qr/).
+
+### Option 2: Local & Air-Gapped
+Since QR CryptoVault is a single self-contained HTML file, running it locally requires no installation:
 
 1. Clone or download this repository.
 2. Open `index.html` in any modern web browser.
-3. To run completely offline, save the file locally and open it with your network connection turned off.
+3. For air-gapped execution, save the file locally and open it with your network connection turned off.
 
 ## Tech Stack
 
