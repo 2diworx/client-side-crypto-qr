@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR CryptoVault</title>
+  <title>QR CryptoVault - Encrypted QR Code Generator</title>
   <style>
     :root {
       --bg: #0d0a0a;
@@ -37,7 +37,7 @@
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
       width: 100%;
-      max-width: 440px;
+      max-width: 480px;
       padding: 28px 24px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 77, 77, 0.05);
       transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -49,8 +49,8 @@
 
     .brand-header {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-start;
+      justify-content: space-between;
       gap: 12px;
       margin-bottom: 20px;
       position: relative;
@@ -71,6 +71,7 @@
 
     .brand-title-wrap {
       text-align: left;
+      flex: 1;
     }
 
     h1 {
@@ -87,10 +88,12 @@
 
     .badge {
       display: inline-block;
-      padding: 3px 8px;
+      padding: 4px 10px;
       font-size: 0.68rem;
       font-weight: 600;
       border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .badge-info {
       background: rgba(255, 77, 77, 0.12);
@@ -139,7 +142,7 @@
     }
 
     .full-width {
-      max-width: 440px;
+      width: 100%;
       margin: 0 auto;
     }
 
@@ -222,11 +225,11 @@
       min-height: 16px;
     }
 
-    /* Output Side Panel */
     .output-side {
       display: none;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -240,21 +243,24 @@
 
     .qr-frame {
       background: #ffffff;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 12px;
+      border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .qr-frame svg {
-      width: 160px;
-      height: 160px;
+      width: 180px;
+      height: 180px;
       display: block;
     }
 
     .qr-actions {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 12px;
       width: 100%;
     }
 
@@ -263,18 +269,32 @@
       background: var(--bg);
       border: 1px solid var(--card-border);
       color: var(--text-main);
-      padding: 6px;
+      padding: 7px;
       border-radius: 6px;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
     }
     .btn-dl:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Simplified Checkbox Controls */
+    .btn-action-full {
+      margin-top: 8px;
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action-full:hover { color: var(--text-main); border-color: var(--accent); }
+
     .output-container {
-      margin-top: 12px;
+      margin-top: 14px;
       width: 100%;
       text-align: left;
     }
@@ -291,30 +311,6 @@
       margin-bottom: 0;
     }
 
-    .checkbox-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      text-transform: none;
-      letter-spacing: normal;
-      font-weight: 500;
-      user-select: none;
-    }
-
-    .checkbox-label input[type="checkbox"] {
-      accent-color: var(--accent);
-      cursor: pointer;
-      width: 13px;
-      height: 13px;
-    }
-
-    .checkbox-label:hover {
-      color: var(--text-main);
-    }
-
     .output-box {
       display: block;
       width: 100%;
@@ -325,11 +321,11 @@
       word-break: break-all;
       white-space: pre-wrap;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--accent);
       text-align: left;
-      line-height: 1.3;
-      max-height: 100px;
+      line-height: 1.4;
+      max-height: 120px;
       overflow-y: auto;
     }
 
@@ -350,13 +346,14 @@
 
     @media (max-width: 680px) {
       .vault-card.expanded {
-        max-width: 440px;
+        max-width: 480px;
       }
       .vault-card.expanded #sub-encrypt {
         grid-template-columns: 1fr;
       }
     }
   </style>
+  <!-- Standard compliant QR code generator -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 </head>
 <body>
@@ -368,9 +365,9 @@
     </div>
     <div class="brand-title-wrap">
       <h1>QR CryptoVault</h1>
-      <p class="subtitle" id="vault-subtitle">Offline Client-Side Encryption</p>
+      <p class="subtitle" id="vault-subtitle">Client-Side AES-256-GCM Protection</p>
     </div>
-    <div id="url-badge" class="badge badge-info hidden" style="margin-left: auto;">Payload Detected</div>
+    <div id="url-badge" class="badge badge-info hidden">Encrypted Link Detected</div>
   </div>
 
   <!-- AUTO DECRYPT MODE -->
@@ -378,17 +375,17 @@
     <div class="form-group">
       <label for="auto-pass">Master Password</label>
       <div class="input-wrapper">
-        <input type="password" id="auto-pass" placeholder="Enter password to unlock">
+        <input type="password" id="auto-pass" placeholder="Enter password to decrypt content">
         <button class="toggle-pass" type="button" onclick="togglePass('auto-pass')">SHOW</button>
       </div>
     </div>
-    <button class="btn" onclick="handleAutoDecrypt()">Decrypt Vault</button>
+    <button class="btn" onclick="handleAutoDecrypt()">Decrypt Content</button>
     <div id="auto-dec-error" class="error-msg"></div>
 
     <div id="auto-dec-result" class="output-container hidden">
       <div class="output-header">
         <label>Decrypted Output</label>
-        <button class="btn-copy" onclick="copyText('auto-decrypted-text', this)">Copy</button>
+        <button class="btn-copy" onclick="copyText('auto-decrypted-text', this)">Copy Output</button>
       </div>
       <div class="output-box" id="auto-decrypted-text"></div>
     </div>
@@ -397,25 +394,25 @@
   <!-- MANUAL ENCRYPT & DECRYPT TABBED MODE -->
   <div id="section-standard">
     <div class="tabs">
-      <button class="tab active" id="tab-enc" onclick="switchTab('encrypt')">Encrypt & QR</button>
-      <button class="tab" id="tab-dec" onclick="switchTab('decrypt')">Decrypt Code</button>
+      <button class="tab active" id="tab-enc" onclick="switchTab('encrypt')">Encrypt Content</button>
+      <button class="tab" id="tab-dec" onclick="switchTab('decrypt')">Decrypt Content</button>
     </div>
 
     <!-- ENCRYPT TAB -->
     <div id="sub-encrypt" class="grid-container">
       <div class="form-side">
         <div class="form-group">
-          <label for="secret-input">Secret Payload</label>
-          <textarea id="secret-input" placeholder="Enter seed phrase, private key, or backup codes..."></textarea>
+          <label for="secret-input">Confidential Data</label>
+          <textarea id="secret-input" placeholder="Enter recovery phrases, private notes, or sensitive keys..."></textarea>
         </div>
         <div class="form-group">
           <label for="enc-pass">Master Password</label>
           <div class="input-wrapper">
-            <input type="password" id="enc-pass" placeholder="Enter master password">
+            <input type="password" id="enc-pass" placeholder="Enter a secure master password">
             <button class="toggle-pass" type="button" onclick="togglePass('enc-pass')">SHOW</button>
           </div>
         </div>
-        <button class="btn" onclick="handleEncrypt()">Generate Web QR Code</button>
+        <button class="btn" onclick="handleEncrypt()">Generate Secure QR Code</button>
         <div id="enc-error" class="error-msg"></div>
       </div>
 
@@ -428,17 +425,17 @@
             <button class="btn-dl" onclick="downloadPNG()">Download PNG</button>
             <button class="btn-dl" onclick="downloadSVG()">Download SVG</button>
           </div>
+          <button class="btn-action-full" onclick="copyPayload(this)">Copy Encrypted Payload</button>
+          <button class="btn-action-full" style="margin-top: 6px;" onclick="previewWebLink()">Preview Web Link ↗</button>
         </div>
-
-        <div id="qr-meta" style="width: 100%;"></div>
       </div>
     </div>
 
     <!-- DECRYPT TAB -->
     <div id="sub-decrypt" class="hidden full-width">
       <div class="form-group">
-        <label for="dec-payload">Encrypted Vault Code</label>
-        <textarea id="dec-payload" placeholder="Paste VAULT: payload string or link here..."></textarea>
+        <label for="dec-payload">Encrypted Data or Link</label>
+        <textarea id="dec-payload" placeholder="Paste encrypted code (VAULT:...) or full link here..."></textarea>
       </div>
       <div class="form-group">
         <label for="dec-pass">Master Password</label>
@@ -447,13 +444,13 @@
           <button class="toggle-pass" type="button" onclick="togglePass('dec-pass')">SHOW</button>
         </div>
       </div>
-      <button class="btn" onclick="handleDecrypt()">Decrypt Payload</button>
+      <button class="btn" onclick="handleDecrypt()">Decrypt Content</button>
       <div id="dec-error" class="error-msg"></div>
 
       <div id="dec-result" class="output-container hidden">
         <div class="output-header">
           <label>Decrypted Output</label>
-          <button class="btn-copy" onclick="copyText('manual-decrypted-text', this)">Copy</button>
+          <button class="btn-copy" onclick="copyText('manual-decrypted-text', this)">Copy Output</button>
         </div>
         <div class="output-box" id="manual-decrypted-text"></div>
       </div>
@@ -467,17 +464,24 @@
   let currentSvgString = "";
   let hasGeneratedQr = false;
   let rawVaultPayload = "";
-  let fullWebUrl = "";
-  let includeUrlMode = true;
 
   window.addEventListener('DOMContentLoaded', () => {
+    checkUrlHash();
+  });
+
+  window.addEventListener('hashchange', () => {
+    checkUrlHash();
+  });
+
+  function checkUrlHash() {
     if (window.location.hash.startsWith('#VAULT:')) {
       document.getElementById('section-standard').classList.add('hidden');
       document.getElementById('section-auto-decrypt').classList.remove('hidden');
       document.getElementById('url-badge').classList.remove('hidden');
-      document.getElementById('vault-subtitle').innerText = "Encrypted payload retrieved from URL";
+      document.getElementById('vault-subtitle').innerText = "Encrypted content detected from link";
+      document.getElementById('main-card').classList.remove('expanded');
     }
-  });
+  }
 
   function switchTab(tab) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -523,8 +527,28 @@
     );
   }
 
-  function bufferToBase64(buf) { return btoa(String.fromCharCode(...new Uint8Array(buf))); }
-  function base64ToBuffer(b64) { return Uint8Array.from(atob(b64), c => c.charCodeAt(0)); }
+  // Safe chunked conversion avoiding call-stack limits
+  function bufferToBase64(buf) {
+    const bytes = new Uint8Array(buf);
+    let binary = '';
+    const chunkSize = 8192;
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      const chunk = bytes.subarray(i, i + chunkSize);
+      binary += String.fromCharCode.apply(null, chunk);
+    }
+    return btoa(binary);
+  }
+
+  function base64ToBuffer(b64) {
+    let normalized = b64.replace(/-/g, '+').replace(/_/g, '/');
+    while (normalized.length % 4) normalized += '=';
+    const binary = atob(normalized);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return bytes;
+  }
 
   async function handleEncrypt() {
     const secret = document.getElementById('secret-input').value;
@@ -534,7 +558,7 @@
     errDiv.innerText = '';
 
     if (!secret || !password) {
-      errDiv.innerText = 'Please enter both payload and password.';
+      errDiv.innerText = 'Please provide both confidential data and a master password.';
       return;
     }
 
@@ -553,52 +577,45 @@
 
       const b64Data = bufferToBase64(combined);
       rawVaultPayload = `VAULT:${b64Data}`;
-      
-      const baseUrl = window.location.href.split('#')[0];
-      fullWebUrl = `${baseUrl}#${rawVaultPayload}`;
 
       hasGeneratedQr = true;
       document.getElementById('main-card').classList.add('expanded');
 
       renderOutputPanel();
-
     } catch(e) {
-      errDiv.innerText = "Error generating vault code.";
+      console.error(e);
+      errDiv.innerText = "Encryption process failed. Please try again.";
     }
-  }
-
-  function toggleUrlMode(checkbox) {
-    includeUrlMode = checkbox.checked;
-    renderOutputPanel();
   }
 
   function renderOutputPanel() {
     if (!hasGeneratedQr) return;
 
     const qrFrame = document.getElementById('qr-frame');
-    const qrMeta = document.getElementById('qr-meta');
+    const baseUrl = window.location.href.split('#')[0];
+    const fullWebUrl = `${baseUrl}#${rawVaultPayload}`;
 
-    const targetText = includeUrlMode ? fullWebUrl : rawVaultPayload;
-
+    // Auto-detect version (0 = auto) with Medium error correction
     const qr = qrcode(0, 'M');
-    qr.addData(targetText);
+    qr.addData(fullWebUrl);
     qr.make();
 
-    currentSvgString = qr.createSvgTag({ scalable: true, margin: 2 });
-    qrFrame.innerHTML = currentSvgString;
+    // Fix: Pass numeric parameters (cellSize = 6, margin = 4) instead of an object
+    currentSvgString = qr.createSvgTag(6, 4);
 
-    qrMeta.innerHTML = `
-      <div class="output-container">
-        <div class="output-header">
-          <label class="checkbox-label">
-            <input type="checkbox" ${includeUrlMode ? 'checked' : ''} onchange="toggleUrlMode(this)">
-            Include Web Link
-          </label>
-          <button class="btn-copy" onclick="copyText('url-output-text', this)">Copy</button>
-        </div>
-        <div class="output-box" id="url-output-text">${targetText}</div>
-      </div>
-    `;
+    // Inject valid XML namespace attributes if missing
+    if (!currentSvgString.includes('xmlns=')) {
+      currentSvgString = currentSvgString.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ');
+    }
+
+    qrFrame.innerHTML = currentSvgString;
+  }
+
+  function previewWebLink() {
+    if (!rawVaultPayload) return;
+    const baseUrl = window.location.href.split('#')[0];
+    const fullWebUrl = `${baseUrl}#${rawVaultPayload}`;
+    window.open(fullWebUrl, '_blank');
   }
 
   function downloadSVG() {
@@ -644,6 +661,20 @@
     img.src = url;
   }
 
+  function copyPayload(btn) {
+    navigator.clipboard.writeText(rawVaultPayload).then(() => {
+      const originalText = btn.innerText;
+      btn.innerText = 'Copied to Clipboard';
+      btn.style.color = 'var(--success)';
+      btn.style.borderColor = 'var(--success)';
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 1500);
+    });
+  }
+
   async function handleAutoDecrypt() {
     const password = document.getElementById('auto-pass').value;
     const errDiv = document.getElementById('auto-dec-error');
@@ -671,7 +702,7 @@
       textOutput.innerText = new TextDecoder().decode(decrypted);
       resultDiv.classList.remove('hidden');
     } catch(e) {
-      errDiv.innerText = 'Decryption failed. Invalid password.';
+      errDiv.innerText = 'Decryption failed: Incorrect password or invalid data.';
     }
   }
 
@@ -686,7 +717,7 @@
     resultDiv.classList.add('hidden');
 
     if (!rawInput || !password) {
-      errDiv.innerText = 'Please enter both payload and password.';
+      errDiv.innerText = 'Please enter both the encrypted content and password.';
       return;
     }
 
@@ -705,15 +736,15 @@
       textOutput.innerText = new TextDecoder().decode(decrypted);
       resultDiv.classList.remove('hidden');
     } catch(e) {
-      errDiv.innerText = 'Decryption failed. Invalid password or corrupted payload.';
+      errDiv.innerText = 'Decryption failed: Verification failed or password incorrect.';
     }
   }
 
   function copyText(elementId, btn) {
-    const text = document.getElementById(elementId).innerText;
-    navigator.clipboard.writeText(text).then(() => {
+    const textToCopy = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(textToCopy).then(() => {
       const originalText = btn.innerText;
-      btn.innerText = 'Copied!';
+      btn.innerText = 'Copied';
       btn.style.color = 'var(--success)';
       btn.style.borderColor = 'var(--success)';
       setTimeout(() => {
